@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content=" ">
+  <meta name="author" content="Andy Lin">
+  <link rel="shortcut icon" href="./images/vue3-1.png">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <title>Vue 3 系列 - 筆記用</title>
+  <style>
+    #title {
+      color: red;
+    }
+  </style>
+
+</head>
+
+<div id="app">
+  <div class="nav" @click="navHandler">
+    <form>
+      <button @click.prevent.stop="submitHandler">submit</button>
+      <button type="button" @click.stop="clearHandler">clear</button>
+    </form>
+  </div>
+  <h1>{{ data }}</h1>
+</div>
+
+
+
+<script>
+  const { ref } = Vue;
+  const app = {
+    setup() {
+      const data = ref("not submit yet");
+
+      const submitHandler = () => {
+        data.value = "submit";
+      };
+
+      const navHandler = () => {
+        data.value = "nav";
+      };
+
+      const clearHandler = () => {
+        data.value = "";
+      };
+
+      return { submitHandler, navHandler, clearHandler, data };
+    },
+  };
+  const myVue = Vue.createApp(app).mount("#app");
+</script>
+</body>
+
+</html>

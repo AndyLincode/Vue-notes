@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content=" ">
+  <meta name="author" content="Andy Lin">
+  <link rel="shortcut icon" href="./images/vue3-1.png">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <title>Vue 3 系列 - 筆記用</title>
+  <style>
+    #title {
+      color: red;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{ counter }}</h1>
+    <button class="addBtn" @click="addHandler($event, 2)">Add</button>
+    <button class="reduceBtn" @click="reduceHandler($event, 2)">Reduce</button>
+  </div>
+
+
+
+  <script>
+    const { ref } = Vue;
+    const app = {
+      setup() {
+        const counter = ref(0);
+
+        const addHandler = (event, num) => {
+          console.log(event.target.className);
+          counter.value += num;
+        };
+        const reduceHandler = (event, num) => {
+          console.log(event.target.className);
+          counter.value -= num;
+        };
+
+        return { counter, addHandler, reduceHandler };
+      },
+    };
+    const myVue = Vue.createApp(app).mount("#app");
+  </script>
+</body>
+
+</html>
