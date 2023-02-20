@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content=" ">
+  <meta name="author" content="Andy Lin">
+  <link rel="shortcut icon" href="./images/vue3-1.png">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <title>Vue 3 系列 - 筆記用</title>
+  <style>
+    #title {
+      color: red;
+    }
+  </style>
+
+</head>
+
+<div id="app">
+  <ul>
+    <li v-for="todo in todos" :key="todo.id">
+      {{ todo.title }}
+    </li>
+  </ul>
+</div>
+
+
+
+<script>
+  const { ref } = Vue;
+  const app = {
+    setup() {
+      let id = 0;
+
+      const todos = ref([
+        { id: id++, title: "HTML" },
+        { id: id++, title: "JavaScript" },
+        { id: id++, title: "Vue" },
+      ]);
+
+      return { todos };
+    },
+  };
+  const myVue = Vue.createApp(app).mount("#app");
+</script>
+</body>
+
+</html>
