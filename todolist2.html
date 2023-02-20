@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content=" ">
+  <meta name="author" content="Andy Lin">
+  <link rel="shortcut icon" href="./images/vue3-1.png">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <title>Vue 3 系列 - 筆記用</title>
+  <style>
+    #title {
+      color: red;
+    }
+  </style>
+
+</head>
+
+<div id="app">
+  <form @submit.prevent="addTodo">
+    <input type="text" v-model="newTodo" />
+    <button>Add Todo</button>
+  </form>
+  <ul>
+    <!-- 記得 todos 要改成 computed 的回傳結果 ( filteredTodos ) -->
+    <li v-for="todo in filteredTodos" :key="todo.id" :class="{completed: todo.completed }">
+      <input type="checkbox" v-model="todo.completed">
+      {{ todo.title}}
+      <button @click="removeTodo(todo)">X</button>
+    </li>
+  </ul>
+  <button @click="hideCompleted = !hideCompleted">
+    {{ hideCompleted ? "Show All" : "Hide Completed" }}
+  </button>
+</div>
+
+
+
+<script>
+  const { ref, computed } = Vue;
+  const app = {
+    setup() {
+      let id = 0;
+
+      const newTodo = ref("");
+      // 新增顯示 completed 或 all 判斷的屬性
+      const hideCompleted = ref(false);
+      // 新增 completed 屬性
+      const todos = ref([
+        { id: id++, title: "HTML", completed: false },
+        { id: id++, title: "JavaScript", completed: true },
+        { id: id++, title: "Vue", completed: false },
+      ]);
+
+      const addTodo = () => {
+        todos.value.push({ id: id++, title: newTodo.value });
+        newTodo.value = "";
+      };
+      const removeTodo = (todo) => {
+        todos.value = todos.value.filter((t) => t !== todo);
+      };
+
+      // computed 計算篩選已完成
+      const filteredTodos = computed(() => {
+        return todos.value.filter((e) => {
+          return hideCompleted.value ? !e.completed : e;
+        });
+      });
+
+      return {
+        newTodo,
+        todos,
+        addTodo,
+        removeTodo,
+        hideCompleted,
+        filteredTodos,
+      };
+    },
+  };
+  const myVue = Vue.createApp(app).mount("#app");
+</script>
+</body>
+
+</html>
